@@ -1,17 +1,17 @@
 // TODO: Write code to define and export the Engineer class.  HINT: This class should inherit from Employee.
-const baseTemplate = require("./Employee");
+const Employee = require("./Employee");
 
-class Engineer {
-  constructor(baseTemplate, role) {
-    this.baseTemplate = baseTemplate;
-    this.role = "Engineer";
+class Engineer extends Employee {
+  constructor(name, id, email, github) {
+    super(name, id, email);
+    this.github = github;
   }
-  getbaseTemplate() {
-    return `${this.baseTemplate}`;
+  getGithub() {
+    return this.github;
   }
+
   getRole() {
-    return `${this.role}`;
+    return "Engineer";
   }
 }
-
-baseTemplate();
+module.exports = Engineer;
