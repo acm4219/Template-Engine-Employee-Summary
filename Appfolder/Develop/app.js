@@ -54,15 +54,7 @@ function askForNextEntry() {
   } else {
   }
 }
-inquirer.prompt(questions).then(function (data) {
-  fs.writeFile("index.html", generate(data), function (err) {
-    if (err) {
-      return console.log(err);
-    } else {
-      console.log("success");
-    }
-  });
-});
+
 let employee = true;
 while (employee) {}
 const html = render(employeeArray);
@@ -98,7 +90,19 @@ function createHtmlFile(html) {
   fs.writeFileSync(outputPath, html);
 }
 
-inquirer.prompt(questions);
+inquirer.prompt(questions).then(function (data) {
+  fs.writeFile("team.html", generate(data), function (err) {
+    if (err) {
+      return console.log(err);
+    } else {
+      console.log("success");
+    }
+  });
+});
+
+function init() {}
+
+init();
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
