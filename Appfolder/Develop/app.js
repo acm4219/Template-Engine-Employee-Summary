@@ -4,105 +4,122 @@ const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
-const employeeArray = [];
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
-const Employee = require("./lib/Employee");
-const questions = [
-  { type: "input", name: "name", message: "What is your name?" },
-  { type: "input", name: "id", Message: "What is your id number?" },
-  { type: "input", name: "Email", message: "What is your Email?" },
-  {
-    type: "list",
-    name: "roles",
-    message: "What is your role?",
-    choices: ["Engineer", "Manager", "Intern"],
-  },
-];
-const engineerQuestion = [
-  { type: "input", name: "Github", message: "what is your github account?" },
-];
-const managerQuestion = [
-  {
-    type: "input",
-    name: "officenumber",
-    message: "What is your office number?",
-  },
-];
-const internQuestion = [
-  { type: "input", name: "college", message: "What is your current college?" },
-];
 
-if (role === "Manager") {
-  inquirer.prompt(managerQuestion);
-} else if (role === "Engineer") {
-  inquirer.prompt(engineerQuestion);
-} else if (role === "Intern") {
-  inquirer.prompt(internQuestion);
-}
-function askForNextEntry() {
-  inquirer.prompt = [
-    {
-      type: "confirm",
-      name: "addNewEmployee",
-      message: "Do you wish to add another employee?",
-      default: Boolean,
-    },
-  ];
-  if (askForNextEntry === true) {
-  } else {
+//possible prompt solution
+function promptUser() {
+  let allEmployees = [];
+  function promptManager(){
+    inquirer.prompt([
+      { "prompt questions here"
+
+      }
+    ]).then ((answers) => {
+      const manager = new Manager(answers.name. answers.id, answers.email,answers.officeNumber);
+      allEmployees.push(manager);
+    })
   }
-}
-
-let employee = true;
-while (employee) {}
-const html = render(employeeArray);
-//asking if they want to make a new employee
-function newEmployee(employeeConfigObj) {
-  const newEmployee = new Employee(employeeConfigObj);
-  employeeArray.push(newEmployee);
-  askForNextEntry();
-  console.log(newEmployee);
-}
-function newEngineer(employeeConfigObj) {
-  const newEngineer = new Engineer(employeeConfigObj);
-  employeeArray.push(newEngineer);
-  askForNextEntry();
-  console.log(newEngineer);
-}
-function newIntern(employeeConfigObj) {
-  const newIntern = new Intern(employeeConfigObj);
-  employeeArray.push(newIntern);
-  askForNextEntry();
-  console.log(newIntern);
-}
-function newMananger(employeeConfigObj) {
-  const newManager = new employeeConfigObj();
-  employeeArray.push(newManager);
-  askForNextEntry();
-  console.log(newManager);
-}
-function createHtmlFile(html) {
-  if (!fs.existsSync(OUTPUT_DIR)) {
-    fs.mkdirSync(OUTPUT_DIR);
+  function addTeamMember() {
+    inquire.prompt([
+      { 
+        type: "input",
+        name: "question",
+        message: "Would you like add another team member?"
+        }
+    ]).then ((answer) => {
+       if(answer.question === 'Engineer'){
+         //call createEngineer Function() 
+         function promptEngineer() {
+           inquirer.prompt([
+             {
+              //questions
+             }
+           ]).then ((answers) => {
+          const engineer = new Engineer(answers.name. answers.id, answers.email,answers.github);
+          allEmployees.push(engineer);
+        })
+         }
+         promptEngineer();
+       } else if(answer.question === intern){
+         function promptIntern() {
+           inquirer.prompt([
+             {
+               //questions
+             }
+           ]).then ((answers) => {
+            const intern = new Intern(answers.name. answers.id, answers.email,answers.school);
+            allEmployees.push(intern);
+          })
+         }
+         promptIntern();
+       } else{
+        function createHtmlFile(html) {
+          if (!fs.existsSync(OUTPUT_DIR)) {
+            fs.mkdirSync(OUTPUT_DIR);
+          }
+          fs.writeFileSync(outputPath, html);
+        }
+        createHtmlFile();
+       }
+    })
   }
-  fs.writeFileSync(outputPath, html);
+  promptManager();
+  addTeamMember();
 }
+promptUser();
 
-inquirer.prompt(questions).then(function (data) {
-  fs.writeFile("team.html", generate(data), function (err) {
-    if (err) {
-      return console.log(err);
-    } else {
-      console.log("success");
-    }
-  });
-});
+
+
+// inquirer.prompt(questions).then(function (data) {
+//   fs.writeFile("team.html", generate(data), function (err) {
+//     if (err) {
+//       return console.log(err);
+//     } else {
+//       console.log("success");
+//     }
+//   });
+// });
 
 function init() {}
 
 init();
+
+/* possible prompt solution
+function promptUser() {
+  let allEmployees = [];
+  function promptManager(){
+    inquirer.prompt([
+      { "prompt questions here"
+
+      }
+    ]).then ((anwsers) => {
+      const manager = new Manager(answers.name. answers.id, answers.email,answers.officeNumber);
+      allEmployees.push(manager);
+    })
+  }
+  function addTeamMember () {
+    inquire.prompt([
+      { 
+        type: "input",
+        name: "question"
+        message: "Would you like add another team member?"
+        }
+    ]).then ((answer) => {
+       if(answer.question === 'Engineer'){
+         call createEngineer Function() 
+       } else if(answer.question === intern){
+         call createIntern Function()
+       } else{
+         call your build HTML function()
+       }
+       you can make the function inside of the nest or outside depending on what you want to do
+    })
+  }
+  promptManager();
+}*/
+//promptUser();
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
