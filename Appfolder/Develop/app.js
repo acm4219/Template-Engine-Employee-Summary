@@ -9,68 +9,138 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 
 //possible prompt solution
+
 function promptUser() {
   let allEmployees = [];
-  function promptManager(){
-    inquirer.prompt([
-      { "prompt questions here"
-
-      }
-    ]).then ((answers) => {
-      const manager = new Manager(answers.name. answers.id, answers.email,answers.officeNumber);
-      allEmployees.push(manager);
-    })
+  function promptManager() {
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "name",
+          message: "What is your name?",
+        },
+        {
+          type: "input",
+          name: "id",
+          Message: "What is your id number?",
+        },
+        {
+          type: "input",
+          name: "Email",
+          message: "What is your Email?",
+        },
+        {
+          type: "input",
+          name: "officenumber",
+          message: "What is your office number?",
+        },
+      ])
+      .then((answers) => {
+        const manager = new Manager(
+          answers.name.answers.id,
+          answers.email,
+          answers.officeNumber
+        );
+        allEmployees.push(manager);
+      });
   }
   function addTeamMember() {
-    inquire.prompt([
-      { 
-        type: "input",
-        name: "question",
-        message: "Would you like add another team member?"
-        }
-    ]).then ((answer) => {
-       if(answer.question === 'Engineer'){
-         //call createEngineer Function() 
-         function promptEngineer() {
-           inquirer.prompt([
-             {
-              //questions
-             }
-           ]).then ((answers) => {
-          const engineer = new Engineer(answers.name. answers.id, answers.email,answers.github);
-          allEmployees.push(engineer);
-        })
-         }
-         promptEngineer();
-       } else if(answer.question === intern){
-         function promptIntern() {
-           inquirer.prompt([
-             {
-               //questions
-             }
-           ]).then ((answers) => {
-            const intern = new Intern(answers.name. answers.id, answers.email,answers.school);
-            allEmployees.push(intern);
-          })
-         }
-         promptIntern();
-       } else{
-        function createHtmlFile(html) {
-          if (!fs.existsSync(OUTPUT_DIR)) {
-            fs.mkdirSync(OUTPUT_DIR);
+    inquire
+      .prompt([
+        {
+          type: "input",
+          name: "question",
+          message: "Would you like add another team member?",
+        },
+      ])
+      .then((answer) => {
+        if (answer.question === "Engineer") {
+          //call createEngineer Function()
+          function promptEngineer() {
+            inquirer
+              .prompt([
+                {
+                  type: "input",
+                  name: "name",
+                  message: "What is your name?",
+                },
+                {
+                  type: "input",
+                  name: "id",
+                  Message: "What is your id number?",
+                },
+                {
+                  type: "input",
+                  name: "Email",
+                  message: "What is your Email?",
+                },
+                {
+                  type: "input",
+                  name: "Github",
+                  message: "what is your github account?",
+                },
+              ])
+              .then((answers) => {
+                const engineer = new Engineer(
+                  answers.name.answers.id,
+                  answers.email,
+                  answers.github
+                );
+                allEmployees.push(engineer);
+              });
           }
-          fs.writeFileSync(outputPath, html);
+        } else if (answer.question === intern) {
+          function promptIntern() {
+            inquirer
+              .prompt([
+                {
+                  type: "input",
+                  name: "name",
+                  message: "What is your name?",
+                },
+                {
+                  type: "input",
+                  name: "id",
+                  Message: "What is your id number?",
+                },
+                {
+                  type: "input",
+                  name: "Email",
+                  message: "What is your Email?",
+                },
+                {
+                  type: "input",
+                  name: "school",
+                  message: "What is your current college?",
+                },
+              ])
+              .then((answers) => {
+                const intern = new Intern(
+                  answers.name.answers.id,
+                  answers.email,
+                  answers.school
+                );
+                allEmployees.push(intern);
+              });
+          }
+        } else {
+          function createHtmlFile(html) {
+            // if (!fs.existsSync(OUTPUT_DIR)) {
+            //   fs.mkdirSync(OUTPUT_DIR);
+            // }
+            fs.writeFileSync(outputPath, html);
+          }
         }
+        promptEngineer();
+        promptIntern();
         createHtmlFile();
-       }
-    })
+      });
   }
   promptManager();
   addTeamMember();
 }
 promptUser();
-
-
 
 // inquirer.prompt(questions).then(function (data) {
 //   fs.writeFile("team.html", generate(data), function (err) {
@@ -82,9 +152,9 @@ promptUser();
 //   });
 // });
 
-function init() {}
+// function init() {}
 
-init();
+// init();
 
 /* possible prompt solution
 function promptUser() {

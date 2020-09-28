@@ -20,7 +20,7 @@ const managerQuestion = [
   },
 ];
 const internQuestion = [
-  { type: "input", name: "college", message: "What is your current college?" },
+  { type: "input", name: "school", message: "What is your current college?" },
 ];
 
 if (role === "Manager") {
