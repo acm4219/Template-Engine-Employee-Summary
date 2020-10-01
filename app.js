@@ -12,53 +12,50 @@ const render = require("./lib/htmlRenderer");
 
 function promptUser() {
   let allEmployees = [];
-  function promptManager() {
-    inquirer
-      .prompt([
-        {
-          type: "input",
-          name: "name",
-          message: "What is your name?",
-        },
-        {
-          type: "input",
-          name: "id",
-          Message: "What is your id number?",
-        },
-        {
-          type: "input",
-          name: "Email",
-          message: "What is your Email?",
-        },
-        {
-          type: "input",
-          name: "officenumber",
-          message: "What is your office number?",
-        },
-      ])
-      .then((answers) => {
-        const manager = new Manager(
-          answers.name.answers.id,
-          answers.email,
-          answers.officeNumber
-        );
-        allEmployees.push(manager);
-      });
-  }
-  function addTeamMember() {
-    inquire
-      .prompt([
-        {
-          type: "input",
-          name: "question",
-          message: "Would you like add another team member?",
-        },
-      ])
-      .then((answer) => {
-        if (answer.question === "Engineer") {
-          //call createEngineer Function()
-          function promptEngineer() {
-            inquirer
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "name",
+        message: "What is your name?",
+      },
+      {
+        type: "input",
+        name: "id",
+        Message: "What is your id number?",
+      },
+      {
+        type: "input",
+        name: "Email",
+        message: "What is your Email?",
+      },
+      {
+        type: "input",
+        name: "officenumber",
+        message: "What is your office number?",
+      },
+    ])
+    .then((answers) => {
+      const manager = new Manager(
+        answers.name,
+        answers.id,
+        answers.Email,
+        answers.officenumber
+      );
+      allEmployees.push(manager);
+      console.log(allEmployees);
+      inquirer
+        .prompt([
+          {
+            type: "input",
+            name: "question",
+            message:
+              "Would you like add another team member? (Either Engineer or Intern)",
+          },
+        ])
+        .then(function (answers) {
+          if (answers === "Engineer") {
+            inquire
               .prompt([
                 {
                   type: "input",
@@ -89,9 +86,7 @@ function promptUser() {
                 );
                 allEmployees.push(engineer);
               });
-          }
-        } else if (answer.question === intern) {
-          function promptIntern() {
+          } else if (answers === "Intern") {
             inquirer
               .prompt([
                 {
@@ -123,73 +118,115 @@ function promptUser() {
                 );
                 allEmployees.push(intern);
               });
-          }
-        } else {
-          function createHtmlFile(html) {
-            // if (!fs.existsSync(OUTPUT_DIR)) {
-            //   fs.mkdirSync(OUTPUT_DIR);
-            // }
-            fs.writeFileSync(outputPath, html);
-          }
-        }
-        promptEngineer();
-        promptIntern();
-        createHtmlFile();
-      });
+          } //else {
+          //   createHtmlFile();
+          // }
+        });
+    });
+}
+
+function createHtmlFile(html) {
+  if (!fs.existsSync(OUTPUT_DIR)) {
+    fs.mkdirSync(OUTPUT_DIR);
   }
-  promptManager();
-  addTeamMember();
+  fs.writeFileSync(outputPath, html);
 }
 promptUser();
-
-// inquirer.prompt(questions).then(function (data) {
-//   fs.writeFile("team.html", generate(data), function (err) {
-//     if (err) {
-//       return console.log(err);
-//     } else {
-//       console.log("success");
-//     }
-//   });
-// });
+//   function addTeamMember() {
+//     inquire
+//       .prompt([
+//         {
+//           type: "input",
+//           name: "question",
+//           message: "Would you like add another team member?",
+//         },
+//       ])
+//       .then((answer) => {
+//         if (answer.question === "Engineer") {
+//           //call createEngineer Function()
+//           function promptEngineer() {
+//             inquirer
+//               .prompt([
+//                 {
+//                   type: "input",
+//                   name: "name",
+//                   message: "What is your name?",
+//                 },
+//                 {
+//                   type: "input",
+//                   name: "id",
+//                   Message: "What is your id number?",
+//                 },
+//                 {
+//                   type: "input",
+//                   name: "Email",
+//                   message: "What is your Email?",
+//                 },
+//                 {
+//                   type: "input",
+//                   name: "Github",
+//                   message: "what is your github account?",
+//                 },
+//               ])
+//               .then((answers) => {
+//                 const engineer = new Engineer(
+//                   answers.name.answers.id,
+//                   answers.email,
+//                   answers.github
+//                 );
+//                 allEmployees.push(engineer);
+//               });
+//           }
+//         } else if (answer.question === intern) {
+//           function promptIntern() {
+//             inquirer
+//               .prompt([
+//                 {
+//                   type: "input",
+//                   name: "name",
+//                   message: "What is your name?",
+//                 },
+//                 {
+//                   type: "input",
+//                   name: "id",
+//                   Message: "What is your id number?",
+//                 },
+//                 {
+//                   type: "input",
+//                   name: "Email",
+//                   message: "What is your Email?",
+//                 },
+//                 {
+//                   type: "input",
+//                   name: "school",
+//                   message: "What is your current college?",
+//                 },
+//               ])
+//               .then((answers) => {
+//                 const intern = new Intern(
+//                   answers.name.answers.id,
+//                   answers.email,
+//                   answers.school
+//                 );
+//                 allEmployees.push(intern);
+//               });
+//           }
+//         } else {
+//
+//         }
+//         promptEngineer();
+//         promptIntern();
+//         createHtmlFile();
+//       });
+//   }
+//   promptManager();
+//   addTeamMember();
+// }
+// promptUser();
 
 // function init() {}
 
 // init();
-
-/* possible prompt solution
-function promptUser() {
-  let allEmployees = [];
-  function promptManager(){
-    inquirer.prompt([
-      { "prompt questions here"
-
-      }
-    ]).then ((anwsers) => {
-      const manager = new Manager(answers.name. answers.id, answers.email,answers.officeNumber);
-      allEmployees.push(manager);
-    })
-  }
-  function addTeamMember () {
-    inquire.prompt([
-      { 
-        type: "input",
-        name: "question"
-        message: "Would you like add another team member?"
-        }
-    ]).then ((answer) => {
-       if(answer.question === 'Engineer'){
-         call createEngineer Function() 
-       } else if(answer.question === intern){
-         call createIntern Function()
-       } else{
-         call your build HTML function()
-       }
-       you can make the function inside of the nest or outside depending on what you want to do
-    })
-  }
-  promptManager();
-}*/
-//promptUser();
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
@@ -212,4 +249,4 @@ function promptUser() {
 // and Intern classes should all extend from a class named Employee; see the directions
 // for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
+// for the provided `render` function to work!
