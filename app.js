@@ -45,6 +45,7 @@ function promptUser() {
       console.log(allEmployees);
       function addTeamMember() {
         inquirer
+
           .prompt([
             {
               type: "rawlist",
@@ -134,17 +135,7 @@ function promptUser() {
       addTeamMember();
     });
 }
-/*function addTeamMember(){
-  inquirer
-        .prompt([
-          {
-            type: "rawlist",
-            name: "question",
-            message: "Would you like add another team member?",
-            choices: ["Engineer", "Intern", "Exit"],
-          },
-        ])
-}*/
+
 function createHtmlFile() {
   if (!fs.existsSync(OUTPUT_DIR)) {
     fs.mkdirSync(OUTPUT_DIR);
@@ -152,17 +143,6 @@ function createHtmlFile() {
   fs.writeFileSync(outputPath, render(allEmployees));
 }
 promptUser();
-
-// const html = generateHTML(answers);
-
-//     return writeFileAsync("index.html", html);
-//   })
-//   .then(function() {
-//     console.log("Successfully wrote to index.html");
-//   })
-//   .catch(function(err) {
-//     console.log(err);
-//   });
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
