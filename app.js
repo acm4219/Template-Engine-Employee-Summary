@@ -42,7 +42,6 @@ function promptUser() {
         answers.officenumber
       );
       allEmployees.push(manager);
-      console.log(allEmployees);
       function addTeamMember() {
         inquirer
 
@@ -55,7 +54,6 @@ function promptUser() {
             },
           ])
           .then(function (answers) {
-            console.log(answers);
             if (answers.question === "Engineer") {
               inquirer
                 .prompt([
